@@ -7,13 +7,13 @@ import "./table1.css";
 
 class Table1 extends React.Component {
   state = {
-    dataUsers: [],
     upsideSort: false,
+    lastnameSort: false,
     personsSorted: [],
+    firstNameSorted: true,
   };
 
   componentDidMount() {
-    // this.state.dataUsers.length>1?
     axios.get("https://randomuser.me/api/?results=25").then((res) => {
       const persons = res.data;
       const personsSorted = [];
@@ -31,24 +31,24 @@ class Table1 extends React.Component {
         };
         personsSorted.push(objOfArr);
       }
-      console.log(personsSorted);
+      // console.log(personsSorted);
 
       this.setState({
-        dataUsers: persons.results,
         personsSorted: personsSorted,
       });
     });
   }
 
   render() {
-    const sortNameAtoZ = (theArrOfUsers) => {
+    const sortNameAtoZ = (theArrOfUsers, nameOfRowToChange) => {
       let arrSorted = theArrOfUsers;
-      arrSorted.sort((a, b) =>
-        a.first > b.first ? 1 : b.first > a.first ? -1 : 0
-      );
-
-      console.log(arrSorted);
-      // this.setState({dataUsers: theArrOfUsers})
+      if (this.state.firstNameSorted) {
+        arrSorted.sort((a, b) =>
+          a[nameOfRowToChange] > b[nameOfRowToChange] ? 1 : b[nameOfRowToChange] > a[nameOfRowToChange] ? -1 : 0
+        );
+      } else {
+        arrSorted.reverse();
+      }
     };
     return (
       <div>
@@ -61,9 +61,10 @@ class Table1 extends React.Component {
               <th>
                 <button
                   onClick={(e) => {
-                    sortNameAtoZ(this.state.personsSorted);
+                    sortNameAtoZ(this.state.personsSorted, "first");
                     this.setState((prevState) => ({
                       upsideSort: !prevState.upsideSort,
+                      firstNameSorted: !prevState.firstNameSorted,
                     }));
                   }}
                   className="tButtonStyle"
@@ -76,7 +77,25 @@ class Table1 extends React.Component {
                   )}
                 </button>
               </th>
-              <th>Last Name</th>
+              <th>
+                <button
+                  onClick={(e) => {
+                    sortNameAtoZ(this.state.personsSorted, "last");
+                    this.setState((prevState) => ({
+                      lastNameSorted: !prevState.lastNameSorted,
+                      lastnameSort: !prevState.lastnameSort,
+                    }));
+                  }}
+                  className="tButtonStyle"
+                >
+                  Last Name
+                  {this.state.lastnameSort ? (
+                    <FaSortAmountDownAlt />
+                  ) : (
+                    <FaSortAmountDown />
+                  )}
+                </button>
+              </th>
               <th>Phone</th>
               <th>Email</th>
               <th>Age</th>
