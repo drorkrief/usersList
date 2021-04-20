@@ -3,6 +3,7 @@ import Table1 from "./table1";
 import Headers from "./headers";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Button, Alert, Nav, Navbar } from "react-bootstrap";
+import Chart from "./chart";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Table1 />
 
         <div className="container">
+          <Chart/>
           <Card style={{ width: "18rem" }}>
             <Card.Img
               variant="top"

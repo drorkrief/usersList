@@ -9,8 +9,12 @@ class Table1 extends React.Component {
   state = {
     upsideSort: false,
     lastnameSort: false,
+    changeIconAge: false,
     personsSorted: [],
     firstNameSorted: true,
+    lastNameSorted: true,
+    ageSorted:true,
+    ageNameSorted: true,
   };
 
   componentDidMount() {
@@ -42,11 +46,22 @@ class Table1 extends React.Component {
   render() {
     const sortNameAtoZ = (theArrOfUsers, nameOfRowToChange) => {
       let arrSorted = theArrOfUsers;
-      if (this.state.firstNameSorted) {
+      if (this.state[nameOfRowToChange + "NameSorted"]) {
         arrSorted.sort((a, b) =>
-          a[nameOfRowToChange] > b[nameOfRowToChange] ? 1 : b[nameOfRowToChange] > a[nameOfRowToChange] ? -1 : 0
+          a[nameOfRowToChange] > b[nameOfRowToChange]
+            ? 1
+            : b[nameOfRowToChange] > a[nameOfRowToChange]
+            ? -1
+            : 0
         );
       } else {
+        arrSorted.sort((a, b) =>
+          a[nameOfRowToChange] > b[nameOfRowToChange]
+            ? 1
+            : b[nameOfRowToChange] > a[nameOfRowToChange]
+            ? -1
+            : 0
+        );
         arrSorted.reverse();
       }
     };
@@ -98,7 +113,25 @@ class Table1 extends React.Component {
               </th>
               <th>Phone</th>
               <th>Email</th>
-              <th>Age</th>
+              <th>
+                <button
+                  onClick={(e) => {
+                    sortNameAtoZ(this.state.personsSorted, "age");
+                    this.setState((prevState) => ({
+                      ageSorted: !prevState.ageSorted,
+                      changeIconAge: !prevState.changeIconAge,
+                    }));
+                  }}
+                  className="tButtonStyle"
+                >
+                  Age{" "}
+                  {this.state.changeIconAge ? (
+                    <FaSortAmountDownAlt />
+                  ) : (
+                    <FaSortAmountDown />
+                  )}
+                </button>
+              </th>
               <th>Gender</th>
               <th>Country</th>
               <th>City</th>
