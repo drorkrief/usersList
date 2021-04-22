@@ -2,19 +2,24 @@ import { Table } from "react-bootstrap";
 import axios from "axios";
 import React from "react";
 import TableRow from "./tableRow";
-import { FaSortAmountDownAlt, FaSortAmountDown } from "react-icons/fa";
+import { FaSortAlphaDown, FaSortAlphaDownAlt, FaSort } from "react-icons/fa";
 import "./table1.css";
 
 class Table1 extends React.Component {
   state = {
-    upsideSort: false,
+    iconStatus = {first: false , last: false , age: false },
+    sortAge: false,
+    sortFirst: false,
+    sortLast: false,
     lastnameSort: false,
     changeIconAge: false,
     personsSorted: [],
     firstNameSorted: true,
     lastNameSorted: true,
-    ageSorted:true,
+    ageSorted: true,
     ageNameSorted: true,
+    iniFirstName: true,
+    iniLastName: true,
   };
 
   componentDidMount() {
@@ -44,25 +49,33 @@ class Table1 extends React.Component {
   }
 
   render() {
-    const sortNameAtoZ = (theArrOfUsers, nameOfRowToChange) => {
+    const iconDisplayer = (titleOfIcon) => {
+      return titleOfIcon === false ? (
+        <FaSort />
+      ) : titleOfIcon === "AtoZ" ? (
+        <FaSortAlphaDown />
+      ) : (
+        <FaSortAlphaDownAlt />
+      );
+    };
+    const resetIconsAndStates = () => {};
+    const sortNameAtoZ = (theArrOfUsers, nameOfRowToChange , valueOfButton) => {
+      // console.log(nameOfRowToChange.name);
+      this.setState({[valueOfButton]:"AtoZ"})
+      // valueOfButton = "AtoZ"
       let arrSorted = theArrOfUsers;
-      if (this.state[nameOfRowToChange + "NameSorted"]) {
-        arrSorted.sort((a, b) =>
-          a[nameOfRowToChange] > b[nameOfRowToChange]
-            ? 1
-            : b[nameOfRowToChange] > a[nameOfRowToChange]
-            ? -1
-            : 0
-        );
-      } else {
-        arrSorted.sort((a, b) =>
-          a[nameOfRowToChange] > b[nameOfRowToChange]
-            ? 1
-            : b[nameOfRowToChange] > a[nameOfRowToChange]
-            ? -1
-            : 0
-        );
+      arrSorted.sort((a, b) =>
+        a[nameOfRowToChange] > b[nameOfRowToChange]
+          ? 1
+          : b[nameOfRowToChange] > a[nameOfRowToChange]
+          ? -1
+          : 0
+      );
+      if (this.state[nameOfRowToChange + "NameSorted"] === false) {
         arrSorted.reverse();
+      }
+      if (nameOfRowToChange === "age") {
+        this.state.ageSorted && arrSorted.reverse();
       }
     };
     return (
@@ -75,27 +88,24 @@ class Table1 extends React.Component {
               <th>#</th>
               <th>
                 <button
-                  onClick={(e) => {
+                value="sortFirst"
+                  onClick={() => {
                     sortNameAtoZ(this.state.personsSorted, "first");
+                    resetIconsAndStates();
                     this.setState((prevState) => ({
-                      upsideSort: !prevState.upsideSort,
                       firstNameSorted: !prevState.firstNameSorted,
                     }));
                   }}
                   className="tButtonStyle"
                 >
-                  First Name{" "}
-                  {this.state.upsideSort ? (
-                    <FaSortAmountDownAlt />
-                  ) : (
-                    <FaSortAmountDown />
-                  )}
+                  First Name{iconDisplayer(this.state.sortFirst)}
                 </button>
               </th>
               <th>
                 <button
-                  onClick={(e) => {
+                  onClick={() => {
                     sortNameAtoZ(this.state.personsSorted, "last");
+                    resetIconsAndStates();
                     this.setState((prevState) => ({
                       lastNameSorted: !prevState.lastNameSorted,
                       lastnameSort: !prevState.lastnameSort,
@@ -103,33 +113,26 @@ class Table1 extends React.Component {
                   }}
                   className="tButtonStyle"
                 >
-                  Last Name
-                  {this.state.lastnameSort ? (
-                    <FaSortAmountDownAlt />
-                  ) : (
-                    <FaSortAmountDown />
-                  )}
+                  Last Name{iconDisplayer(this.state.sortLast)}
                 </button>
               </th>
               <th>Phone</th>
               <th>Email</th>
               <th>
+                {/*  AGE   */}
                 <button
-                  onClick={(e) => {
+                  onClick={() => {
                     sortNameAtoZ(this.state.personsSorted, "age");
+                    resetIconsAndStates();
                     this.setState((prevState) => ({
                       ageSorted: !prevState.ageSorted,
                       changeIconAge: !prevState.changeIconAge,
+                      sortAge: !prevState.sortAge,
                     }));
                   }}
                   className="tButtonStyle"
                 >
-                  Age{" "}
-                  {this.state.changeIconAge ? (
-                    <FaSortAmountDownAlt />
-                  ) : (
-                    <FaSortAmountDown />
-                  )}
+                  Age {iconDisplayer(this.state.sortAge)}
                 </button>
               </th>
               <th>Gender</th>
