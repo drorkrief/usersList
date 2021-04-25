@@ -7,19 +7,10 @@ import "./table1.css";
 
 class Table1 extends React.Component {
   state = {
-    iconStatus = {first: false , last: false , age: false },
-    sortAge: false,
-    sortFirst: false,
-    sortLast: false,
-    lastnameSort: false,
-    changeIconAge: false,
+    iconStatus: { first: false, last: false, age: false },
+  
     personsSorted: [],
-    firstNameSorted: true,
-    lastNameSorted: true,
-    ageSorted: true,
-    ageNameSorted: true,
-    iniFirstName: true,
-    iniLastName: true,
+  
   };
 
   componentDidMount() {
@@ -50,33 +41,43 @@ class Table1 extends React.Component {
 
   render() {
     const iconDisplayer = (titleOfIcon) => {
-      return titleOfIcon === false ? (
+      return this.state.iconStatus[titleOfIcon] === false ? (
         <FaSort />
-      ) : titleOfIcon === "AtoZ" ? (
+      ) : this.state.iconStatus[titleOfIcon] === "AtoZ" ? (
         <FaSortAlphaDown />
       ) : (
         <FaSortAlphaDownAlt />
       );
     };
-    const resetIconsAndStates = () => {};
-    const sortNameAtoZ = (theArrOfUsers, nameOfRowToChange , valueOfButton) => {
-      // console.log(nameOfRowToChange.name);
-      this.setState({[valueOfButton]:"AtoZ"})
-      // valueOfButton = "AtoZ"
+    const updateIcons = (currentItem) => {
+      let keysOfIcons = Object.keys(this.state.iconStatus);
+      var index = keysOfIcons.indexOf(currentItem);
+      keysOfIcons.splice(index, 1);
+      const res = keysOfIcons.reduce((acc,curr)=> (acc[curr]=false,acc),{});
+      currentItem = {
+        ...res,
+        [currentItem]:
+          this.state.iconStatus[currentItem] === false
+            ? "AtoZ"
+            : this.state.iconStatus[currentItem] === "AtoZ"
+            ? "ZtoA"
+            : false,
+      };
+      this.setState({ iconStatus: currentItem });
+    };
+    const sortNameAtoZ = (theArrOfUsers, nameOfRowToChange) => {
       let arrSorted = theArrOfUsers;
       arrSorted.sort((a, b) =>
-        a[nameOfRowToChange] > b[nameOfRowToChange]
-          ? 1
-          : b[nameOfRowToChange] > a[nameOfRowToChange]
-          ? -1
-          : 0
+      a[nameOfRowToChange] > b[nameOfRowToChange]
+      ? 1
+      : b[nameOfRowToChange] > a[nameOfRowToChange]
+      ? -1
+      : 0
       );
-      if (this.state[nameOfRowToChange + "NameSorted"] === false) {
+      if (this.state.iconStatus[nameOfRowToChange] === "AtoZ") {
         arrSorted.reverse();
       }
-      if (nameOfRowToChange === "age") {
-        this.state.ageSorted && arrSorted.reverse();
-      }
+      updateIcons(nameOfRowToChange);
     };
     return (
       <div>
@@ -88,32 +89,23 @@ class Table1 extends React.Component {
               <th>#</th>
               <th>
                 <button
-                value="sortFirst"
+                  value="sortFirst"
                   onClick={() => {
                     sortNameAtoZ(this.state.personsSorted, "first");
-                    resetIconsAndStates();
-                    this.setState((prevState) => ({
-                      firstNameSorted: !prevState.firstNameSorted,
-                    }));
                   }}
                   className="tButtonStyle"
                 >
-                  First Name{iconDisplayer(this.state.sortFirst)}
+                  First Name{iconDisplayer("first")}
                 </button>
               </th>
               <th>
                 <button
                   onClick={() => {
                     sortNameAtoZ(this.state.personsSorted, "last");
-                    resetIconsAndStates();
-                    this.setState((prevState) => ({
-                      lastNameSorted: !prevState.lastNameSorted,
-                      lastnameSort: !prevState.lastnameSort,
-                    }));
                   }}
                   className="tButtonStyle"
                 >
-                  Last Name{iconDisplayer(this.state.sortLast)}
+                  Last Name{iconDisplayer("last")}
                 </button>
               </th>
               <th>Phone</th>
@@ -123,16 +115,10 @@ class Table1 extends React.Component {
                 <button
                   onClick={() => {
                     sortNameAtoZ(this.state.personsSorted, "age");
-                    resetIconsAndStates();
-                    this.setState((prevState) => ({
-                      ageSorted: !prevState.ageSorted,
-                      changeIconAge: !prevState.changeIconAge,
-                      sortAge: !prevState.sortAge,
-                    }));
                   }}
                   className="tButtonStyle"
                 >
-                  Age {iconDisplayer(this.state.sortAge)}
+                  Age {iconDisplayer("age")}
                 </button>
               </th>
               <th>Gender</th>
