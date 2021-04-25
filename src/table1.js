@@ -80,9 +80,12 @@ class Table1 extends React.Component {
       updateIcons(nameOfRowToChange);
     };
     return (
-      <div>
-        <br />
-        <br />
+      <div className="container">
+        <br/>
+        <br/>
+        {this.state.personsSorted.length>0? 
+        
+       
         <Table responsive striped bordered hover size="sm">
           <thead>
             <tr>
@@ -129,11 +132,14 @@ class Table1 extends React.Component {
           <tbody>
             {this.state.personsSorted.length > 20
               ? this.state.personsSorted.map((dataOne, i) => (
-                  <TableRow key={i} numList={i + 1} datar={dataOne} />
+                <TableRow key={i} numList={i + 1} datar={dataOne} />
                 ))
               : ""}
           </tbody>
         </Table>
+                :<div className="spinner-border" style={{width:"3rem", height: "3rem", marginTop:"10rem"}} role="status">
+          <span class="sr-only">Loading...</span>
+        </div>}
         <p>{}</p>
       </div>
     );
