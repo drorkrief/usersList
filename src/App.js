@@ -18,13 +18,16 @@ function App() {
       <div>
         <nav>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand><Link className="links" to="/about">Users-List</Link></Navbar.Brand>
+        <Navbar.Brand><Link className="links" to="/">Users-List</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link><Link className="links" to="/about">The List</Link></Nav.Link>
+          <Link className="links" to="/about">Shabbat Times</Link>
+          <Link className="links" to="/table">The List</Link>
+          <Link className="links" to="/Home">Home</Link>
+            {/* <Nav.Link><Link className="links" to="/about">The List</Link></Nav.Link>
             <Nav.Link><Link className="links" to="/table">Shabbat Ti</Link></Nav.Link>
-            <Nav.Link><Link className="links" to="/Home">Home</Link></Nav.Link>
+            <Nav.Link><Link className="links" to="/Home">Home</Link></Nav.Link> */}
           </Nav>
           <Nav>
             <Nav.Link href="#deets">More deets</Nav.Link>
@@ -69,11 +72,7 @@ function App() {
         <div className="container">
           <Chart />
         </div>
-        <Alert key={1} variant="danger">
-          This is a "danger" alert with{" "}
-          <Alert.Link href="#">an example link</Alert.Link>. Give it a click if
-          you like.
-        </Alert>
+       
         <Zmanim />
       </div>
     </div>
