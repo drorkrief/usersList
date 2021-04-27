@@ -1,13 +1,13 @@
 import "./App.css";
 import Table1 from "./table1";
-import Headers from "./headers";
+// import Headers from "./headers";
 import Home from "./Home";
 import About from "./about";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Alert, Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import Chart from "./chart";
+// import Chart from "./chart";
 import Zmanim from "./zmanim";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-          <Link className="links" to="/about">Shabbat Times</Link>
+          <Link className="links" to="/Zmanim">Shabbat Times</Link>
           <Link className="links" to="/table">The List</Link>
           <Link className="links" to="/Home">Home</Link>
             {/* <Nav.Link><Link className="links" to="/about">The List</Link></Nav.Link>
@@ -49,6 +49,9 @@ function App() {
           <Route path="/about">
             <About />
           </Route>
+          <Route path="/Zmanim">
+            <Zmanim />
+          </Route>
           <Route path="/Home">
             <Home />
           </Route>
@@ -67,14 +70,15 @@ function App() {
 
 
       <div className="container">
-        <Headers />
+        {/* <Headers /> */}
 
         <div className="container">
-          <Chart />
+          {/* <Chart /> */}
         </div>
        
-        <Zmanim />
+        {/* <Zmanim /> */}
       </div>
+      <div>Font made from <a href="http://www.onlinewebfonts.com">www.onlinewebfonts.com</a> is licensed by CC BY 3.0</div>
     </div>
   );
 }

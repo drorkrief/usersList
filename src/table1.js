@@ -67,13 +67,14 @@ class Table1 extends React.Component {
     };
     const sortNameAtoZ = (theArrOfUsers, nameOfRowToChange) => {
       let arrSorted = theArrOfUsers;
+      if (this.state.iconStatus[nameOfRowToChange] === false) {
       arrSorted.sort((a, b) =>
       a[nameOfRowToChange] > b[nameOfRowToChange]
       ? 1
       : b[nameOfRowToChange] > a[nameOfRowToChange]
       ? -1
       : 0
-      );
+      );}
       if (this.state.iconStatus[nameOfRowToChange] === "AtoZ") {
         arrSorted.reverse();
       }
@@ -138,7 +139,7 @@ class Table1 extends React.Component {
           </tbody>
         </Table>
                 :<div className="spinner-border" style={{width:"3rem", height: "3rem", marginTop:"10rem"}} role="status">
-          <span class="sr-only">Loading...</span>
+          <span className="sr-only">Loading...</span>
         </div>}
         <p>{}</p>
       </div>

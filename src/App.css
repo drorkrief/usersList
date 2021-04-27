@@ -3,5 +3,46 @@
 }
 .links {
   color: white !important;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
 }
+div.homePage {
+  background-image: url(https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg);
+  /* background-position: center 56px;
+  background-repeat: no-repeat;
+  background-size: cover; */
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.8;
+}
+/* .flex-item {
+
+} */
+@import url(//db.onlinewebfonts.com/c/85d22f83f9b17a5b45ada4b0d7c5df98?family=Stardos+Stencil);
+@import url("https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap");
+h1.header1 {
+  padding: 5px;
+  display: inline-block;
+  color: blue;
+  margin: 30px 0 30px 0;
+  border-radius: 4px;
+  background: rgba(225, 225, 225, 0.4);
+  font-family: "Stardos Stencil";
+}
+div.textSize {
+  font-family: "Zen Dots", cursive;
+}
+@media screen and (min-width: 601px) {
+  div.textSize {
+    font-size: 4vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  div.textSize {
+    font-size: 30px;
+  }
+}
+
+/* textSize <div>Font made from <a href="http://www.onlinewebfonts.com">www.onlinewebfonts.com</a> is licensed by CC BY 3.0</div> */
